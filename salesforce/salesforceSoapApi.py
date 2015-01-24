@@ -29,7 +29,7 @@ class SalesforceSoapAPI(SalesforceAPI):
     @utils.authenticate
     def query_all(self, query_string):
         response = self.post(query_string, SalesforceSoapAPI.Action.QUERYALL)
-        xml_resp_value = xml.dom.minidom.parseString(response.text)
+        xml_resp_value = xml.dom.minidom.parseString(response.text.encode('utf-8'))
 
         def do_query_all(xml_response_value):
             done = utils.get_element_by_name(xml_response_value, 'done')
@@ -40,7 +40,7 @@ class SalesforceSoapAPI(SalesforceAPI):
                 query_locator = utils.get_element_by_name(xml_response_value, 'queryLocator')
 
                 result = self.query_more(query_locator)
-                xml_result_value = xml.dom.minidom.parseString(result.text)
+                xml_result_value = xml.dom.minidom.parseString(result.text.encode('utf-8'))
 
                 done = utils.get_element_by_name(xml_result_value, 'done')
                 total_size = utils.get_element_by_name(xml_result_value, 'totalSize')
