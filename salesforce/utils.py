@@ -152,7 +152,7 @@ def send_request(method, httplib, url, headers, **kwargs):
         raise
 
     if headers and 'SOAPAction' in headers:
-        return response
+        return response.encode('utf-8')
     else:
         return response.json()
 
