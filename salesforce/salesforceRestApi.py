@@ -56,15 +56,15 @@ class SalesforceRestAPI(SalesforceAPI):
         resp = self.get(query_url, params)
 
         def do_query_all(response):
-            if response['done']:
+            if response['done'] or not response['nextRecordsUrl']:
                 return response
             else:
                 result = self.query_more(response['nextRecordsUrl'])
 
                 response['done'] = result['done']
+                response['nextRecordsUrl'] = result.get('nextRecordsUrl')
                 response['totalSize'] += result['totalSize']
                 response['records'].extend(result['records'])
-                print response
                 return do_query_all(response)
 
         return do_query_all(resp)
