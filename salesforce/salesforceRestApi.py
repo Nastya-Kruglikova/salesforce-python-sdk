@@ -64,7 +64,7 @@ class SalesforceRestAPI(SalesforceAPI):
                 response['done'] = result['done']
                 response['totalSize'] += result['totalSize']
                 response['records'].extend(result['records'])
-
+                print response
                 return do_query_all(response)
 
         return do_query_all(resp)
