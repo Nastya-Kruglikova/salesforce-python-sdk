@@ -75,15 +75,14 @@ class SalesforceRestAPI(SalesforceAPI):
             self.auth.instance_url,
             ResourcesName.get_resource_name("query"))
 
-        print url
-        print query_url
-        print self.auth.instance_url
-
         if url.startswith(query_url,
                           len(self.auth.instance_url)):
             get_url = '{0}/{1}'.format(self.auth.instance_url, url)
         else:
-            get_url = '{0}/{1}'.format(query_url, url)
+            if url[0] == '/':
+              get_url = '{0}{1}'.format(self.auth.instance_url, url)
+            else:
+              get_url = '{0}/{1}'.format(query_url, url)
         return self.get(get_url)
 
     @utils.authenticate
