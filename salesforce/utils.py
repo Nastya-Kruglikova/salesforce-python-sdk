@@ -140,7 +140,6 @@ def verify_response(response):
 
 
 def send_request(method, httplib, url, headers, **kwargs):
-    print method + ": Sending request to " + url + "\n"
 
     response = httplib(method,
                        url,
