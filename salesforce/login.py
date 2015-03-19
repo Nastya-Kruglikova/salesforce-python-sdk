@@ -165,7 +165,7 @@ class LoginWithSoapAPI(Login):
                                       headers,
                                       data=data)
 
-        xml_value = xml.dom.minidom.parseString(response.text)
+        xml_value = xml.dom.minidom.parseString(response.text.encode('utf-8'))
         access_token = utils.get_element_by_name(xml_value, 'sessionId')
         url = urlparse(utils.get_element_by_name(xml_value, 'serverUrl'))
         instance_url = '{0}://{1}'.format(url.scheme, url.netloc)
