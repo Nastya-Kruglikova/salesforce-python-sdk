@@ -162,6 +162,9 @@ class SObjectFacade(object):
     def update(self, data, soap=None):
         return self.__get_api(soap).__getattr__(self.name).update(data)
 
+    def upsert(self, external_id, data, soap=None):
+        return self.__get_api(soap).__getattr__(self.name).upsert(external_id, data)
+
     def delete(self, record_id, soap=None):
         return self.__get_api(soap).__getattr__(self.name).delete(record_id)
 

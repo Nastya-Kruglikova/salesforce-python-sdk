@@ -30,5 +30,8 @@ class SObject(object):
     def delete(self, data):
         raise NotImplementedError
 
+    def upsert(self, external_id, data):
+        raise NotImplementedError
+
     def post(self, data, **kwargs):
         raise NotImplementedError
