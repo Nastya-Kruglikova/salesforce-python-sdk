@@ -1,4 +1,5 @@
 import utils
+from requests import ConnectionError
 
 
 class Version(object):
@@ -11,14 +12,16 @@ class Version(object):
     def get_latest_version(httplib):
         version_api_url = Version.VERSION_PATH
         latest_version = 0
+        try:
+            response = utils.send_request('GET',
+                                          httplib,
+                                          version_api_url,
+                                          None)
 
-        response = utils.send_request('GET',
-                                      httplib,
-                                      version_api_url,
-                                      None)
+            for value in response:
+                if float(value['version']) > latest_version:
+                    latest_version = float(value['version'])
 
-        for value in response:
-            if float(value['version']) > latest_version:
-                latest_version = float(value['version'])
-
-        return latest_version
+            return latest_version
+        except ConnectionError:
+            return None
